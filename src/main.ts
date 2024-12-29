@@ -15,8 +15,16 @@ app.use(express.urlencoded({ extended: true }));
 
 app.get("/:movie", async (req: Request, res: Response) => {
   const wokeMeter = +`${req.query.wokeMeter}` || 3;
+  if (isNaN(wokeMeter)) {
+    res.status(400).send("Invalid wokeMeter");
+    return;
+  }
+  if (req.params.movie?.length > 60) {
+    res.status(400).send("Movie name too long");
+    return;
+  }
   const { existingMovie } = await fetchExistingMovie(
-    req.params.movie,
+    req.params.movie?.toLowerCase(),
     wokeMeter
   );
 
@@ -31,18 +39,23 @@ app.get("/:movie", async (req: Request, res: Response) => {
   );
   const { poster } = await getMoviePoster(movieName);
 
-  await insertMovieToDB({
-    possibleName: req.params.movie,
-    movieName,
-    wokeScore,
-    wokeMeter,
-    headline,
-    summary,
-    poster,
-  });
+  if (movieName && wokeScore && summary && headline && poster) {
+    await insertMovieToDB({
+      possibleName: req.params.movie,
+      movieName,
+      wokeScore,
+      wokeMeter,
+      headline,
+      summary,
+      poster,
+    });
 
-  res.send({ movieName, wokeScore, summary, headline, poster });
-  return;
+    res.send({ movieName, wokeScore, summary, headline, poster });
+    return;
+  } else {
+    res.status(404).send("Movie not found");
+    return;
+  }
 });
 
 app.listen(port, () => {

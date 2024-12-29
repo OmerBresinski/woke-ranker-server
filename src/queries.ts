@@ -29,8 +29,8 @@ export const insertMovieToDB = async (movie: {
   try {
     await prismaClient.movie.create({
       data: {
-        possibleName: movie.possibleName,
-        name: movie.movieName,
+        possibleName: movie.possibleName.toLowerCase(),
+        name: movie.movieName.toLowerCase(),
         wokeScore: movie.wokeScore,
         summary: movie.summary,
         headline: movie.headline,
