@@ -120,17 +120,12 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
 exports.Prisma.MovieScalarFieldEnum = {
   id: 'id',
   name: 'name',
+  possibleName: 'possibleName',
   wokeScore: 'wokeScore',
   wokeMeter: 'wokeMeter',
   summary: 'summary',
   headline: 'headline',
   poster: 'poster'
-};
-
-exports.Prisma.MoviePossibleNamesScalarFieldEnum = {
-  id: 'id',
-  possibleName: 'possibleName',
-  name: 'name'
 };
 
 exports.Prisma.SortOrder = {
@@ -145,8 +140,7 @@ exports.Prisma.QueryMode = {
 
 
 exports.Prisma.ModelName = {
-  Movie: 'Movie',
-  MoviePossibleNames: 'MoviePossibleNames'
+  Movie: 'Movie'
 };
 
 /**

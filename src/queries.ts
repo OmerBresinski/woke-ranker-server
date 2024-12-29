@@ -8,7 +8,7 @@ export const fetchExistingMovie = async (
 
   const movie = await prismaClient.movie.findFirst({
     where: {
-      name: movieName,
+      possibleName: movieName,
       wokeMeter,
     },
   });
@@ -16,30 +16,20 @@ export const fetchExistingMovie = async (
   return { existingMovie: movie };
 };
 
-export const fetchExistingPossibleName = async (movieName: string) => {
-  const prismaClient = createPrismaClient();
-
-  const movie = await prismaClient.moviePossibleNames.findFirst({
-    where: {
-      possibleName: movieName,
-    },
-  });
-
-  return { existingPossibleName: movie?.name };
-};
-
 export const insertMovieToDB = async (movie: {
+  possibleName: string;
   movieName: string;
   wokeScore: number;
   wokeMeter: number;
-  summary: string;
   headline: string;
+  summary: string;
   poster: string;
 }) => {
   const prismaClient = createPrismaClient();
   try {
     await prismaClient.movie.create({
       data: {
+        possibleName: movie.possibleName,
         name: movie.movieName,
         wokeScore: movie.wokeScore,
         summary: movie.summary,
@@ -51,18 +41,4 @@ export const insertMovieToDB = async (movie: {
   } catch (ex) {
     console.log((ex as Error).message);
   }
-};
-
-export const insertPossibleNameToDb = async (
-  possibleName: string,
-  movieName: string
-) => {
-  const prismaClient = createPrismaClient();
-
-  await prismaClient.moviePossibleNames.create({
-    data: {
-      possibleName,
-      name: movieName,
-    },
-  });
 };

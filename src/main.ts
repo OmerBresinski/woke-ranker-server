@@ -1,12 +1,7 @@
 import express, { type Request, type Response } from "express";
 import cors from "cors";
 import { getMoviePoster, parseResponse, queryWokenessFromGrok } from "./utils";
-import {
-  fetchExistingMovie,
-  fetchExistingPossibleName,
-  insertMovieToDB,
-  insertPossibleNameToDb,
-} from "./queries";
+import { fetchExistingMovie, insertMovieToDB } from "./queries";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -20,57 +15,34 @@ app.use(express.urlencoded({ extended: true }));
 
 app.get("/:movie", async (req: Request, res: Response) => {
   const wokeMeter = +`${req.query.wokeMeter}` || 3;
-  const { existingPossibleName } = await fetchExistingPossibleName(
-    req.params.movie
+  const { existingMovie } = await fetchExistingMovie(
+    req.params.movie,
+    wokeMeter
   );
 
-  if (existingPossibleName) {
-    const { existingMovie } = await fetchExistingMovie(
-      existingPossibleName,
-      wokeMeter
-    );
-
-    if (existingMovie) {
-      res.send({
-        movieName: existingMovie.name,
-        wokeScore: existingMovie.wokeScore,
-        summary: existingMovie.summary,
-        headline: existingMovie.headline,
-        poster: existingMovie.poster,
-      });
-      return;
-    } else {
-      res.status(404).send({ message: "Movie not found" });
-      return;
-    }
+  if (existingMovie) {
+    res.send(existingMovie);
+    return;
   }
 
-  const grokResponse = await queryWokenessFromGrok(
-    req.params.movie,
-    `${req.query.wokeMeter}`
-  );
+  const grokResponse = await queryWokenessFromGrok(req.params.movie, wokeMeter);
   const { movieName, wokeScore, summary, headline } = parseResponse(
     grokResponse.choices[0].message.content
   );
   const { poster } = await getMoviePoster(movieName);
 
-  if (poster && movieName && wokeScore && summary && headline) {
-    await insertMovieToDB({
-      movieName,
-      wokeScore,
-      wokeMeter,
-      summary,
-      headline,
-      poster,
-    });
-    await insertPossibleNameToDb(req.params.movie, movieName);
+  await insertMovieToDB({
+    possibleName: req.params.movie,
+    movieName,
+    wokeScore,
+    wokeMeter,
+    headline,
+    summary,
+    poster,
+  });
 
-    res.send({ movieName, wokeScore, summary, headline, poster });
-    return;
-  } else {
-    res.status(404).send({ message: "Movie not found" });
-    return;
-  }
+  res.send({ movieName, wokeScore, summary, headline, poster });
+  return;
 });
 
 app.listen(port, () => {

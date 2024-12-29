@@ -9,17 +9,12 @@ datasource db {
 }
 
 model Movie {
-  id        Int    @id @default(autoincrement())
-  name      String
-  wokeScore Int
-  wokeMeter Int
-  summary   String
-  headline  String
-  poster    String
-}
-
-model MoviePossibleNames {
   id           Int    @id @default(autoincrement())
-  possibleName String
   name         String
+  possibleName String
+  wokeScore    Int
+  wokeMeter    Int
+  summary      String
+  headline     String
+  poster       String
 }
