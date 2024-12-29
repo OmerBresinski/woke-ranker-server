@@ -34,7 +34,7 @@ export const queryWokenessFromGrok = async (
           content: query,
         },
       ],
-      model: "grok-beta",
+      model: "grok-2",
     }),
     method: "POST",
   });
