@@ -1,4 +1,7 @@
-export const queryGrok = async (query: string, wokeMeter: string) => {
+export const queryWokenessFromGrok = async (
+  query: string,
+  wokeMeter: string
+) => {
   const res = await fetch(`https://api.x.ai/v1/chat/completions`, {
     headers: {
       "Content-Type": "application/json",
