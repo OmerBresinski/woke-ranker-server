@@ -125,7 +125,9 @@ exports.Prisma.MovieScalarFieldEnum = {
   wokeMeter: 'wokeMeter',
   summary: 'summary',
   headline: 'headline',
-  poster: 'poster'
+  poster: 'poster',
+  rating: 'rating',
+  released: 'released'
 };
 
 exports.Prisma.SortOrder = {

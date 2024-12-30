@@ -875,6 +875,8 @@ export namespace Prisma {
     summary: string | null
     headline: string | null
     poster: string | null
+    rating: string | null
+    released: string | null
   }
 
   export type MovieMaxAggregateOutputType = {
@@ -886,6 +888,8 @@ export namespace Prisma {
     summary: string | null
     headline: string | null
     poster: string | null
+    rating: string | null
+    released: string | null
   }
 
   export type MovieCountAggregateOutputType = {
@@ -897,6 +901,8 @@ export namespace Prisma {
     summary: number
     headline: number
     poster: number
+    rating: number
+    released: number
     _all: number
   }
 
@@ -922,6 +928,8 @@ export namespace Prisma {
     summary?: true
     headline?: true
     poster?: true
+    rating?: true
+    released?: true
   }
 
   export type MovieMaxAggregateInputType = {
@@ -933,6 +941,8 @@ export namespace Prisma {
     summary?: true
     headline?: true
     poster?: true
+    rating?: true
+    released?: true
   }
 
   export type MovieCountAggregateInputType = {
@@ -944,6 +954,8 @@ export namespace Prisma {
     summary?: true
     headline?: true
     poster?: true
+    rating?: true
+    released?: true
     _all?: true
   }
 
@@ -1042,6 +1054,8 @@ export namespace Prisma {
     summary: string
     headline: string
     poster: string
+    rating: string
+    released: string
     _count: MovieCountAggregateOutputType | null
     _avg: MovieAvgAggregateOutputType | null
     _sum: MovieSumAggregateOutputType | null
@@ -1072,6 +1086,8 @@ export namespace Prisma {
     summary?: boolean
     headline?: boolean
     poster?: boolean
+    rating?: boolean
+    released?: boolean
   }, ExtArgs["result"]["movie"]>
 
   export type MovieSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -1083,6 +1099,8 @@ export namespace Prisma {
     summary?: boolean
     headline?: boolean
     poster?: boolean
+    rating?: boolean
+    released?: boolean
   }, ExtArgs["result"]["movie"]>
 
   export type MovieSelectScalar = {
@@ -1094,6 +1112,8 @@ export namespace Prisma {
     summary?: boolean
     headline?: boolean
     poster?: boolean
+    rating?: boolean
+    released?: boolean
   }
 
 
@@ -1109,6 +1129,8 @@ export namespace Prisma {
       summary: string
       headline: string
       poster: string
+      rating: string
+      released: string
     }, ExtArgs["result"]["movie"]>
     composites: {}
   }
@@ -1510,6 +1532,8 @@ export namespace Prisma {
     readonly summary: FieldRef<"Movie", 'String'>
     readonly headline: FieldRef<"Movie", 'String'>
     readonly poster: FieldRef<"Movie", 'String'>
+    readonly rating: FieldRef<"Movie", 'String'>
+    readonly released: FieldRef<"Movie", 'String'>
   }
     
 
@@ -1820,7 +1844,9 @@ export namespace Prisma {
     wokeMeter: 'wokeMeter',
     summary: 'summary',
     headline: 'headline',
-    poster: 'poster'
+    poster: 'poster',
+    rating: 'rating',
+    released: 'released'
   };
 
   export type MovieScalarFieldEnum = (typeof MovieScalarFieldEnum)[keyof typeof MovieScalarFieldEnum]
@@ -1904,6 +1930,8 @@ export namespace Prisma {
     summary?: StringFilter<"Movie"> | string
     headline?: StringFilter<"Movie"> | string
     poster?: StringFilter<"Movie"> | string
+    rating?: StringFilter<"Movie"> | string
+    released?: StringFilter<"Movie"> | string
   }
 
   export type MovieOrderByWithRelationInput = {
@@ -1915,6 +1943,8 @@ export namespace Prisma {
     summary?: SortOrder
     headline?: SortOrder
     poster?: SortOrder
+    rating?: SortOrder
+    released?: SortOrder
   }
 
   export type MovieWhereUniqueInput = Prisma.AtLeast<{
@@ -1929,6 +1959,8 @@ export namespace Prisma {
     summary?: StringFilter<"Movie"> | string
     headline?: StringFilter<"Movie"> | string
     poster?: StringFilter<"Movie"> | string
+    rating?: StringFilter<"Movie"> | string
+    released?: StringFilter<"Movie"> | string
   }, "id">
 
   export type MovieOrderByWithAggregationInput = {
@@ -1940,6 +1972,8 @@ export namespace Prisma {
     summary?: SortOrder
     headline?: SortOrder
     poster?: SortOrder
+    rating?: SortOrder
+    released?: SortOrder
     _count?: MovieCountOrderByAggregateInput
     _avg?: MovieAvgOrderByAggregateInput
     _max?: MovieMaxOrderByAggregateInput
@@ -1959,6 +1993,8 @@ export namespace Prisma {
     summary?: StringWithAggregatesFilter<"Movie"> | string
     headline?: StringWithAggregatesFilter<"Movie"> | string
     poster?: StringWithAggregatesFilter<"Movie"> | string
+    rating?: StringWithAggregatesFilter<"Movie"> | string
+    released?: StringWithAggregatesFilter<"Movie"> | string
   }
 
   export type MovieCreateInput = {
@@ -1969,6 +2005,8 @@ export namespace Prisma {
     summary: string
     headline: string
     poster: string
+    rating: string
+    released: string
   }
 
   export type MovieUncheckedCreateInput = {
@@ -1980,6 +2018,8 @@ export namespace Prisma {
     summary: string
     headline: string
     poster: string
+    rating: string
+    released: string
   }
 
   export type MovieUpdateInput = {
@@ -1990,6 +2030,8 @@ export namespace Prisma {
     summary?: StringFieldUpdateOperationsInput | string
     headline?: StringFieldUpdateOperationsInput | string
     poster?: StringFieldUpdateOperationsInput | string
+    rating?: StringFieldUpdateOperationsInput | string
+    released?: StringFieldUpdateOperationsInput | string
   }
 
   export type MovieUncheckedUpdateInput = {
@@ -2001,6 +2043,8 @@ export namespace Prisma {
     summary?: StringFieldUpdateOperationsInput | string
     headline?: StringFieldUpdateOperationsInput | string
     poster?: StringFieldUpdateOperationsInput | string
+    rating?: StringFieldUpdateOperationsInput | string
+    released?: StringFieldUpdateOperationsInput | string
   }
 
   export type MovieCreateManyInput = {
@@ -2012,6 +2056,8 @@ export namespace Prisma {
     summary: string
     headline: string
     poster: string
+    rating: string
+    released: string
   }
 
   export type MovieUpdateManyMutationInput = {
@@ -2022,6 +2068,8 @@ export namespace Prisma {
     summary?: StringFieldUpdateOperationsInput | string
     headline?: StringFieldUpdateOperationsInput | string
     poster?: StringFieldUpdateOperationsInput | string
+    rating?: StringFieldUpdateOperationsInput | string
+    released?: StringFieldUpdateOperationsInput | string
   }
 
   export type MovieUncheckedUpdateManyInput = {
@@ -2033,6 +2081,8 @@ export namespace Prisma {
     summary?: StringFieldUpdateOperationsInput | string
     headline?: StringFieldUpdateOperationsInput | string
     poster?: StringFieldUpdateOperationsInput | string
+    rating?: StringFieldUpdateOperationsInput | string
+    released?: StringFieldUpdateOperationsInput | string
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -2070,6 +2120,8 @@ export namespace Prisma {
     summary?: SortOrder
     headline?: SortOrder
     poster?: SortOrder
+    rating?: SortOrder
+    released?: SortOrder
   }
 
   export type MovieAvgOrderByAggregateInput = {
@@ -2087,6 +2139,8 @@ export namespace Prisma {
     summary?: SortOrder
     headline?: SortOrder
     poster?: SortOrder
+    rating?: SortOrder
+    released?: SortOrder
   }
 
   export type MovieMinOrderByAggregateInput = {
@@ -2098,6 +2152,8 @@ export namespace Prisma {
     summary?: SortOrder
     headline?: SortOrder
     poster?: SortOrder
+    rating?: SortOrder
+    released?: SortOrder
   }
 
   export type MovieSumOrderByAggregateInput = {

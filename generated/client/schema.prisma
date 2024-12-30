@@ -17,4 +17,6 @@ model Movie {
   summary      String
   headline     String
   poster       String
+  rating       String
+  released     String
 }

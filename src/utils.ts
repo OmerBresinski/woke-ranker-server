@@ -55,13 +55,13 @@ export const parseResponse = (content: string) => {
   }
 };
 
-export const getMoviePoster = async (
+export const getMovieData = async (
   movieName: string
-): Promise<Record<"poster", string>> => {
+): Promise<{ rating: string; poster: string; released: string }> => {
   const res = await fetch(
     `http://www.omdbapi.com/?i=${process.env.OMDB_I}&apikey=${process.env.OMDB_API_KEY}&t=${movieName}`
   );
   const data = await res.json();
 
-  return { poster: data.Poster };
+  return { poster: data.Poster, rating: data.Rated, released: data.Released };
 };

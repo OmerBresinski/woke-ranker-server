@@ -1,6 +1,6 @@
 import express, { type Request, type Response } from "express";
 import cors from "cors";
-import { getMoviePoster, parseResponse, queryWokenessFromGrok } from "./utils";
+import { getMovieData, parseResponse, queryWokenessFromGrok } from "./utils";
 import { fetchExistingMovie, insertMovieToDB } from "./queries";
 import dotenv from "dotenv";
 
@@ -37,7 +37,7 @@ app.get("/:movie", async (req: Request, res: Response) => {
   const { movieName, wokeScore, summary, headline } = parseResponse(
     grokResponse.choices[0].message.content
   );
-  const { poster } = await getMoviePoster(movieName);
+  const { poster, rating, released } = await getMovieData(movieName);
 
   if (movieName && wokeScore && summary && headline && poster) {
     await insertMovieToDB({
@@ -48,9 +48,19 @@ app.get("/:movie", async (req: Request, res: Response) => {
       headline,
       summary,
       poster,
+      rating,
+      released,
     });
 
-    res.send({ movieName, wokeScore, summary, headline, poster });
+    res.send({
+      movieName,
+      wokeScore,
+      summary,
+      headline,
+      poster,
+      rating,
+      released,
+    });
     return;
   } else {
     res.status(404).send("Movie not found");

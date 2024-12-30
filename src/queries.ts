@@ -24,6 +24,8 @@ export const insertMovieToDB = async (movie: {
   headline: string;
   summary: string;
   poster: string;
+  rating: string;
+  released: string;
 }) => {
   const prismaClient = createPrismaClient();
   try {
@@ -36,6 +38,8 @@ export const insertMovieToDB = async (movie: {
         headline: movie.headline,
         poster: movie.poster,
         wokeMeter: movie.wokeMeter,
+        rating: movie.rating,
+        released: movie.released,
       },
     });
   } catch (ex) {
