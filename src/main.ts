@@ -1,6 +1,11 @@
 import express, { type Request, type Response } from "express";
 import cors from "cors";
-import { getMovieData, parseResponse, queryWokenessFromGrok } from "./utils";
+import {
+  getMovieData,
+  parseResponse,
+  queryWokenessFromGrok,
+  rateLimiter,
+} from "./utils";
 import { fetchExistingMovie, insertMovieToDB } from "./queries";
 import dotenv from "dotenv";
 
@@ -12,6 +17,7 @@ const port = 3000;
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(rateLimiter);
 
 app.get("/:movie", async (req: Request, res: Response) => {
   const wokeMeter = +`${req.query.wokeMeter}` || 3;

@@ -1,3 +1,5 @@
+import rateLimit from "express-rate-limit";
+
 export const queryWokenessFromGrok = async (
   query: string,
   wokeMeter: number
@@ -67,3 +69,10 @@ export const getMovieData = async (
 
   return { poster: data.Poster, rating: data.Rated, released: data.Released };
 };
+
+export const rateLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  limit: 10,
+  standardHeaders: "draft-8",
+  legacyHeaders: false,
+});
