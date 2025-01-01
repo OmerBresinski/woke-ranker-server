@@ -1,5 +1,23 @@
 import { createPrismaClient } from "./dbClient";
 
+export const fetchPopularMovies = async () => {
+  const prismaClient = createPrismaClient();
+  const movies = await prismaClient.movie.groupBy({
+    by: ["name", "poster"],
+    _count: {
+      name: true,
+    },
+    orderBy: {
+      _count: {
+        name: "desc",
+      },
+    },
+    take: 20,
+  });
+
+  return movies;
+};
+
 export const fetchExistingMovie = async (
   movieName: string,
   wokeMeter: number
