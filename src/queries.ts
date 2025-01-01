@@ -36,7 +36,7 @@ export const fetchExistingMovie = async (
 
 export const insertMovieToDB = async (movie: {
   possibleName: string;
-  movieName: string;
+  name: string;
   wokeScore: number;
   wokeMeter: number;
   headline: string;
@@ -50,7 +50,7 @@ export const insertMovieToDB = async (movie: {
     await prismaClient.movie.create({
       data: {
         possibleName: movie.possibleName.toLowerCase(),
-        name: movie.movieName.toLowerCase(),
+        name: movie.name.toLowerCase(),
         wokeScore: movie.wokeScore,
         summary: movie.summary,
         headline: movie.headline,

@@ -34,57 +34,64 @@ app.get("/popular", async (_req: Request, res: Response) => {
 });
 
 app.get("/:movie", async (req: Request, res: Response) => {
-  const wokeMeter = +`${req.query.wokeMeter}` || 3;
-  if (isNaN(wokeMeter)) {
-    res.status(400).send("Invalid wokeMeter");
-    return;
-  }
-  if (req.params.movie?.length > 60) {
-    res.status(400).send("Movie name too long");
-    return;
-  }
-  const { existingMovie } = await fetchExistingMovie(
-    req.params.movie?.toLowerCase(),
-    wokeMeter
-  );
+  try {
+    const wokeMeter = +`${req.query.wokeMeter}` || 3;
+    if (isNaN(wokeMeter)) {
+      res.status(400).send("Invalid wokeMeter");
+      return;
+    }
+    if (req.params.movie?.length > 60) {
+      res.status(400).send("Movie name too long");
+      return;
+    }
+    const { existingMovie } = await fetchExistingMovie(
+      req.params.movie?.toLowerCase(),
+      wokeMeter
+    );
 
-  if (existingMovie) {
-    res.send(existingMovie);
-    return;
-  }
+    if (existingMovie) {
+      res.send(existingMovie);
+      return;
+    }
 
-  const grokResponse = await queryWokenessFromGrok(req.params.movie, wokeMeter);
-  const { movieName, wokeScore, summary, headline } = parseResponse(
-    grokResponse.choices[0].message.content
-  );
-  const { poster, rating, released } = await getMovieData(movieName);
+    const grokResponse = await queryWokenessFromGrok(
+      req.params.movie,
+      wokeMeter
+    );
+    const { name, wokeScore, summary, headline } = parseResponse(
+      grokResponse.choices[0].message.content
+    );
+    const { poster, rating, released } = await getMovieData(name);
 
-  if (movieName && wokeScore && summary && headline && poster) {
-    await insertMovieToDB({
-      possibleName: req.params.movie,
-      movieName,
-      wokeScore,
-      wokeMeter,
-      headline,
-      summary,
-      poster,
-      rating,
-      released,
-    });
+    if (name && wokeScore && summary && headline && poster) {
+      await insertMovieToDB({
+        possibleName: req.params.movie,
+        name,
+        wokeScore,
+        wokeMeter,
+        headline,
+        summary,
+        poster,
+        rating,
+        released,
+      });
 
-    res.send({
-      movieName,
-      wokeScore,
-      summary,
-      headline,
-      poster,
-      rating,
-      released,
-    });
-    return;
-  } else {
-    res.status(404).send("Movie not found");
-    return;
+      res.send({
+        name,
+        wokeScore,
+        summary,
+        headline,
+        poster,
+        rating,
+        released,
+      });
+      return;
+    } else {
+      res.status(404).send("Movie not found");
+      return;
+    }
+  } catch (error) {
+    res.status(500).send("Internal error");
   }
 });
 

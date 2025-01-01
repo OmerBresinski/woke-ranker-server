@@ -22,13 +22,13 @@ export const queryWokenessFromGrok = async (
           If a movie name has typos, or not a full name, for example: hary poter 5 instead of Harry Potter and the Order of the Phoenix, you should still be able to figure it out and adjust the name to the correct one.
   
             interface Response {
-                movieName: string;
+                name: string;
                 wokeScore: number;
                 summary: string;
                 headline: string;
             }
             
-            A response would be composed of a movieName, a wokeScore which describes how woke the movie is on a scale of 1-5 based on the summary, the summary of why that score was given (with politeness based on the wokeMeter level) max 100 words, and a headline which would be two short sentences describing how woke or not woke the movie is in an intellectual playful manner while referencing something from the film, starting with something similar to "Ah, you're looking for", but not always that. Make sure that the wokeScore matches the summary.
+            A response would be composed of a name, which is the movie name, a wokeScore which describes how woke the movie is on a scale of 1-5 based on the summary, the summary of why that score was given (with politeness based on the wokeMeter level) max 100 words, and a headline which would be two short sentences describing how woke or not woke the movie is in an intellectual playful manner while referencing something from the film, starting with something similar to "Ah, you're looking for", but not always that. Make sure that the wokeScore matches the summary.
   
             If the movie does not exist on IMDBTV, return null in all of the fields
             
@@ -73,7 +73,7 @@ export const getMovieData = async (
 
 export const rateLimiter = rateLimit({
   windowMs: 20 * 60 * 1000,
-  limit: 50,
+  limit: 500,
   standardHeaders: "draft-8",
   legacyHeaders: false,
 });
