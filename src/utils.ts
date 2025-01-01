@@ -73,7 +73,7 @@ export const getMovieData = async (
 
 export const rateLimiter = rateLimit({
   windowMs: 20 * 60 * 1000,
-  limit: 500,
+  limit: 50,
   standardHeaders: "draft-8",
   legacyHeaders: false,
 });
