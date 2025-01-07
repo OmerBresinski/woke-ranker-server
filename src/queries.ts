@@ -1,7 +1,6 @@
-import { createPrismaClient } from "./dbClient";
+import { prismaClient } from "./dbClient";
 
 export const fetchPopularMovies = async () => {
-  const prismaClient = createPrismaClient();
   const movies = await prismaClient.movie.groupBy({
     by: ["name", "poster"],
     _count: {
@@ -22,14 +21,14 @@ export const fetchExistingMovie = async (
   movieName: string,
   wokeMeter: number
 ) => {
-  const prismaClient = createPrismaClient();
-
   const movie = await prismaClient.movie.findFirst({
     where: {
       possibleName: movieName,
       wokeMeter,
     },
   });
+
+  await new Promise((resolve) => setTimeout(resolve, 2000));
 
   return { existingMovie: movie };
 };
@@ -45,7 +44,6 @@ export const insertMovieToDB = async (movie: {
   rating: string;
   released: string;
 }) => {
-  const prismaClient = createPrismaClient();
   try {
     await prismaClient.movie.create({
       data: {

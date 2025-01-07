@@ -5,3 +5,5 @@ export const createPrismaClient = () => {
     datasourceUrl: process.env.DATABASE_URL,
   });
 };
+
+export const prismaClient = createPrismaClient();
